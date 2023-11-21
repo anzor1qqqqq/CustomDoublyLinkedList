@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "customDoublyLinkedList", "customDoublyLinkedList\customDoublyLinkedList.vcxproj", "{29C5F02F-EAF1-4477-968D-8208A55D4506}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Debug|x64.ActiveCfg = Debug|x64
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Debug|x64.Build.0 = Debug|x64
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Debug|x86.ActiveCfg = Debug|Win32
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Debug|x86.Build.0 = Debug|Win32
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Release|x64.ActiveCfg = Release|x64
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Release|x64.Build.0 = Release|x64
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Release|x86.ActiveCfg = Release|Win32
+		{29C5F02F-EAF1-4477-968D-8208A55D4506}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F85F523-0442-41B2-875F-D76E23D01C06}
+	EndGlobalSection
+EndGlobal
