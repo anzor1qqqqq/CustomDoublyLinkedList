@@ -45,6 +45,44 @@ public:
 		this->sizeList++;
 	};
 
+	void addElemFront(T newElem) {
+		if (this->sizeList > 0) {
+			Node<T>* newNode = new Node<T>(newElem, this->tail);
+
+			this->tail->nextElem = newNode;
+
+			this->tail = newNode;
+		} else {
+			this->addElemBack(newElem);
+		}; 
+	};
+	
+	void addElemIndex(T newElem, int index) {
+		if (this->sizeList == 0 && index == 0) {
+			this->addElemBack(newElem);
+		} else if (this->sizeList > 0 && index == 0) {
+			this->addElemFront(newElem);
+		} else if (this->sizeList >= index) {
+
+			if (this->sizeList / 2 >= index) {
+				Node<T>* current = this->tail;
+
+				for (int i = 0; i < index - 1; i++) {
+					current = current->prevElem;
+				};
+
+				current->prevElem = new Node<T>(newElem, current->prevElem);
+
+
+			} else {
+
+			};
+
+		} else {
+			abort();
+		};
+	};
+
 };
 
 int main() {
