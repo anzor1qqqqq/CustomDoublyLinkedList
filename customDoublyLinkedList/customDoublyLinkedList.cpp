@@ -89,6 +89,104 @@ public:
 			abort();
 		};
 	};
+
+	void removeElemFront() {
+		if (this->sizeList > 0) {
+			Node<T>* tmp = this->head;
+
+			this->head = tmp->nextElem;
+
+			this->head != nullptr ? this->head->prevElem = nullptr : this->tail = nullptr;
+
+			delete tmp;
+
+			this->sizeList--;
+		} else {
+			abort();
+		};
+	};
+
+	void removeElemBack() {
+		if (this->sizeList > 0) {
+			Node<T>* tmp = this->tail;
+
+			this->tail = tmp->prevElem;
+
+			this->tail != nullptr ? this->tail->nextElem = nullptr : this->head = nullptr;
+
+			delete tmp;
+
+			this->sizeList--;
+		} else {
+			abort();
+		};
+	};
+
+	void removeElemIndex(int index) {
+		if (this->sizeList > index) {
+			if (index == 0) {
+				this->removeElemFront();
+			} else if (this->sizeList == index - 1) {
+				this->removeElemBack();
+			} else {
+				Node<T>* current = this->head;
+
+				for (int i = 0; i < index - 1; i++) {
+					current = current->nextElem;
+				};
+
+				Node<T>* deleteElem = current->nextElem;
+
+				current->nextElem = deleteElem->nextElem;
+
+				current->nextElem->prevElem = deleteElem->prevElem;
+
+				delete deleteElem;
+			};
+
+			this->sizeList--;
+		} else {
+			abort();
+		};
+	};
+
+	T getElemIndex(int index) {
+		if (this->sizeList > index) {
+			T resul;
+
+			if (this->sizeList / 2 >= index) {
+				Node<T>* current = this->head;
+
+				for (int i = 0; i < index; i++) {
+					current = current->nextElem;
+				};
+
+				resul = current->elem;	
+			} else {
+				Node<T>* current = this->tail;
+
+				for (int i = this->sizeList - (index + 1); i > 0; i--) {
+					current = current->prevElem;
+				};
+
+				resul = current->elem;
+			};
+			
+			return resul;
+		};
+
+		abort();
+	};
+
+	void clear() {
+		while (this->sizeList != 0) {
+			this->removeElemFront();
+		};
+	};
+
+	~CustomList() {
+		this->clear();
+	}
 };
 
 int main() {
@@ -98,6 +196,16 @@ int main() {
 	firstList.addElemBack(2);
 	firstList.addElemBack(3);
 
-	firstList.addElemIndex(54, 1);
-	firstList.addElemIndex(54, 2);
+	firstList.addElemIndex(4, 1);
+	firstList.addElemIndex(5, 2);
+
+	firstList.removeElemFront();
+
+	firstList.removeElemIndex(1);
+
+	//firstList.removeElemBack();
+
+	cout << firstList.getElemIndex(0);
+
+	cout << firstList.getElemIndex(2);
 };
