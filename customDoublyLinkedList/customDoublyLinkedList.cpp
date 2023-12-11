@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -78,9 +78,8 @@ public:
 
 			this->head->prevElem = newNode;
 
-			this->head = newNode;
-		}
-		else {
+			this->tail = newNode;
+		} else {
 			this->addElemBack(newElem);
 		};
 	};
@@ -91,8 +90,7 @@ public:
 		}
 		else if (this->sizeList > 0 && index == 0) {
 			this->addElemFront(newElem);
-		}
-		else if (this->sizeList > index) {
+ 		} else if (this->sizeList > index) {
 
 			if (this->sizeList / 2 >= index) {
 				Node<T>* current = this->head;
@@ -198,9 +196,8 @@ public:
 					current = current->nextElem;
 				};
 
-				resul = current->elem;
-			}
-			else {
+				resul = current->elem;	
+			} else {
 				Node<T>* current = this->tail;
 
 				for (int i = this->sizeList - (index + 1); i > 0; i--) {
@@ -264,14 +261,16 @@ int main() {
 	firstList.addElemBack(2);
 	firstList.addElemBack(3);
 
-	CustomList<int> SecondList(firstList);
+	firstList.addElemIndex(4, 1);
+	firstList.addElemIndex(5, 2);
 
-	CustomList<int> thirdList;
+	firstList.removeElemFront();
 
-	thirdList.addElemBack(1);
-	thirdList.addElemBack(2);
-	thirdList.addElemBack(3);
+	firstList.removeElemIndex(1);
 
-	thirdList = firstList;
+	//firstList.removeElemBack();
 
+	cout << firstList.getElemIndex(0);
+
+	cout << firstList.getElemIndex(2);
 };
