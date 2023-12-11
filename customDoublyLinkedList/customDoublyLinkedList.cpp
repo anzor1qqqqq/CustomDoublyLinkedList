@@ -4,7 +4,7 @@ using namespace std;
 
 template <typename T>
 struct Node {
-	Node<T>* nextElem, *prevElem;
+	Node<T>* nextElem, * prevElem;
 	T elem;
 
 	Node(T elemParam = T(), Node<T>* prevElemParam = nullptr, Node<T>* nextElemParam = nullptr) {
@@ -17,7 +17,8 @@ struct Node {
 template <typename T>
 class CustomList {
 private:
-	Node<T>* head, *tail;
+	Node<T>* head;
+	Node<T>* tail;
 	int sizeList;
 
 public:
@@ -28,13 +29,39 @@ public:
 		this->sizeList = 0;
 	};
 
+	CustomList(const CustomList& other) {
+		this->sizeList = other.sizeList;
+
+		if (this->sizeList > 0) {
+			this->head = new Node<T>(other.head->elem);
+			this->tail = new Node<T>();
+
+			Node<T>* currentMain = other.head->nextElem;
+			Node<T>* currentCopy = this->head;
+
+			for (int i = 0; i < this->sizeList - 1; i++) {
+				currentCopy->nextElem = new Node<T>(currentMain->elem, currentCopy);
+
+				currentMain = currentMain->nextElem;
+				currentCopy = currentCopy->nextElem;
+			};
+
+			this->tail = currentCopy;
+		}
+		else {
+			this->head = nullptr;
+			this->tail = nullptr;
+		};
+	};
+
 	void addElemBack(T elem) {
 		Node<T>* newNode = new Node<T>(elem);
 
 		if (sizeList == 0) {
 			this->head = newNode;
 			this->tail = newNode;
-		} else {
+		}
+		else {
 			newNode->prevElem = this->tail;
 
 			this->tail->nextElem = newNode;
@@ -47,22 +74,25 @@ public:
 
 	void addElemFront(T newElem) {
 		if (this->sizeList > 0) {
-			Node<T>* newNode = new Node<T>(newElem, this->tail);
+			Node<T>* newNode = new Node<T>(newElem, nullptr, this->head);
 
-			this->tail->nextElem = newNode;
+			this->head->prevElem = newNode;
 
-			this->tail = newNode;
-		} else {
+			this->head = newNode;
+		}
+		else {
 			this->addElemBack(newElem);
-		}; 
+		};
 	};
-	
+
 	void addElemIndex(T newElem, int index) {
 		if (this->sizeList == 0 && index == 0) {
 			this->addElemBack(newElem);
-		} else if (this->sizeList > 0 && index == 0) {
+		}
+		else if (this->sizeList > 0 && index == 0) {
 			this->addElemFront(newElem);
- 		} else if (this->sizeList > index) {
+		}
+		else if (this->sizeList > index) {
 
 			if (this->sizeList / 2 >= index) {
 				Node<T>* current = this->head;
@@ -71,21 +101,23 @@ public:
 					current = current->nextElem;
 				};
 
-				current->nextElem = new Node<T>(newElem, current->nextElem->prevElem, current->nextElem);
+				current->nextElem = new Node<T>(newElem, current, current->nextElem);
 				current->nextElem->nextElem->prevElem = current->nextElem;
-			} else {
+			}
+			else {
 				Node<T>* current = this->tail;
 
 				for (int i = this->sizeList; i > index + 1; i--) {
 					current = current->prevElem;
 				};
 
-				current->prevElem = new Node<T>(newElem, current->prevElem, current->prevElem->nextElem);
+				current->prevElem = new Node<T>(newElem, current->prevElem, current);
 				current->prevElem->prevElem->nextElem = current->prevElem;
 			};
 
 			this->sizeList++;
-		} else {
+		}
+		else {
 			abort();
 		};
 	};
@@ -101,7 +133,8 @@ public:
 			delete tmp;
 
 			this->sizeList--;
-		} else {
+		}
+		else {
 			abort();
 		};
 	};
@@ -117,7 +150,8 @@ public:
 			delete tmp;
 
 			this->sizeList--;
-		} else {
+		}
+		else {
 			abort();
 		};
 	};
@@ -126,9 +160,11 @@ public:
 		if (this->sizeList > index) {
 			if (index == 0) {
 				this->removeElemFront();
-			} else if (this->sizeList == index - 1) {
+			}
+			else if (this->sizeList == index - 1) {
 				this->removeElemBack();
-			} else {
+			}
+			else {
 				Node<T>* current = this->head;
 
 				for (int i = 0; i < index - 1; i++) {
@@ -145,7 +181,8 @@ public:
 			};
 
 			this->sizeList--;
-		} else {
+		}
+		else {
 			abort();
 		};
 	};
@@ -161,8 +198,9 @@ public:
 					current = current->nextElem;
 				};
 
-				resul = current->elem;	
-			} else {
+				resul = current->elem;
+			}
+			else {
 				Node<T>* current = this->tail;
 
 				for (int i = this->sizeList - (index + 1); i > 0; i--) {
@@ -171,7 +209,7 @@ public:
 
 				resul = current->elem;
 			};
-			
+
 			return resul;
 		};
 
@@ -184,9 +222,39 @@ public:
 		};
 	};
 
+	CustomList operator= (const CustomList& other) {
+		if (&other != this) {
+			if (this->sizeList != 0) {
+				this->clear();
+
+				this->sizeList = other.sizeList;
+				this->head = new Node<T>(other.head->elem);
+				this->tail = new Node<T>();
+
+				Node<T>* currentMain = other.head->nextElem;
+				Node<T>* currentCopy = this->head;
+
+				for (int i = 0; i < this->sizeList - 1; i++) {
+					currentCopy->nextElem = new Node<T>(currentMain->elem, currentCopy);
+
+					currentMain = currentMain->nextElem;
+					currentCopy = currentCopy->nextElem;
+				};
+
+				this->tail = currentCopy;
+			}
+			else {
+				this->head = nullptr;
+				this->tail = nullptr;
+			};
+		};
+
+		return *this;
+	};
+
 	~CustomList() {
 		this->clear();
-	}
+	};
 };
 
 int main() {
@@ -196,16 +264,14 @@ int main() {
 	firstList.addElemBack(2);
 	firstList.addElemBack(3);
 
-	firstList.addElemIndex(4, 1);
-	firstList.addElemIndex(5, 2);
+	CustomList<int> SecondList(firstList);
 
-	firstList.removeElemFront();
+	CustomList<int> thirdList;
 
-	firstList.removeElemIndex(1);
+	thirdList.addElemBack(1);
+	thirdList.addElemBack(2);
+	thirdList.addElemBack(3);
 
-	//firstList.removeElemBack();
+	thirdList = firstList;
 
-	cout << firstList.getElemIndex(0);
-
-	cout << firstList.getElemIndex(2);
 };
